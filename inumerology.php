@@ -6,6 +6,10 @@ if( isset($_POST["fullname"]) && $_POST["fullname"] !="" && preg_match("/^[a-zA-
 	# Define fullname 
 	$fullname = strtoupper($_POST["fullname"]);
 
+    # Defining variable for Soul & Personality
+    $soul = "";
+    $personality = "";
+
 	# Array letters, define vowel and consonant
 	$array_letters = array("A"=>array(1,"vowel"),"B"=>array(2,"consonant"),"C"=>array(3,"consonant"),"D"=>array(4,"consonant"),"E"=>array(5,"vowel"),"F"=>array(6,"consonant"),"G"=>array(7,"consonant"),"H"=>array(8,"consonant"),"I"=>array(9,"vowel"),"J"=>array(1,"consonant"),"K"=>array(2,"consonant"),"L"=>array(3,"consonant"),"M"=>array(4,"consonant"),"N"=>array(5,"consonant"),"O"=>array(6,"vowel"),"P"=>array(7,"consonant"),"Q"=>array(8,"consonant"),"R"=>array(9,"consonant"),"S"=>array(1,"consonant"),"T"=>array(2,"consonant"),"U"=>array(3,"vowel"),"V"=>array(4,"consonant"),"W"=>array(5,"consonant"),"X"=>array(6,"consonant"),"Y"=>array(7,"consonant"),"Z"=>array(8,"consonant"));
 
@@ -60,9 +64,5 @@ if( isset($_POST["fullname"]) && $_POST["fullname"] !="" && preg_match("/^[a-zA-
 
     $soul = array("number"=>strSplitX($sn),"character"=>$array_character[strSplitX($sn)]);
     $personality = array("number"=>strSplitX($pn),"character"=>$array_character[strSplitX($pn)]);
-
-	// echo "<strong>".$fullname."</strong><br>";
-	// echo "Your Soul Number : (".strSplitX($sn).") ".$array_character[strSplitX($soul_number)]."<br>";
-	// echo "Your Personality Number : (".strSplitX($personality_number).") ".$array_character[strSplitX($personality_number)];
 }
 ?>

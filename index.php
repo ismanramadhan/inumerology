@@ -1,78 +1,45 @@
+<?php require_once('inumerology.php'); ?>
 <html>
 <head>
 	<title>Soul & Personality by Numerology</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<!-- Bootstrap core CSS -->
+	<link href="https://getbootstrap.com/docs/3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<link href="https://getbootstrap.com/docs/3.4/assets/css/ie10-viewport-bug-workaround.csss" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="form.css" rel="stylesheet">
+
+	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+	<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	<script src="https://getbootstrap.com/docs/3.4/assets/js/ie-emulation-modes-warning.js"></script>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+	<![endif]-->
+
 </head>
 <body>
-	<form action="" method="post">
-		<input type="text" name="fullname">
-		<input type="submit" value="Check">
-	</form>
+	<div class="container">
+	<form action="" method="post" class="form-numerology">
+        <h2 class="form-numerology-heading text-center">iNumerology :</h2>
+        <label for="inputFullname" class="sr-only">Fullname</label>
+        <input type="text" id="inputFullname" name="fullname" class="form-control" placeholder="Input your name ..." required autofocus>
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Check">
+      </form>
+	  <div class="text-center">
+		<?php 
+				// if(isset($fullname)) {
+					echo "<strong>".$fullname."</strong><br>";
+					echo "🤗 <strong>Your Soul Number</strong> : (".$soul["number"].") ".$soul["character"]."<br>";
+					echo "😇 <strong>Your Personality Number</strong> : (".$personality["number"].") ".$personality["character"]."<br>";
+				// }
+		?>
+	  </div>
+	</div>
 </body>
 </html>
-
-
-<?php
-error_reporting(0);
-
-if( isset($_POST["fullname"]) && $_POST["fullname"] !="" && preg_match("/^[a-zA-Z\s]+$/", $_POST["fullname"]) == true && strlen($_POST["fullname"]) > 2 ) {
-
-	# Define fullname 
-	$fullname = strtoupper($_POST["fullname"]);
-
-	# Array letters, define vowel and consonant
-	$array_letters = array("A"=>array(1,"vowel"),"B"=>array(2,"consonant"),"C"=>array(3,"consonant"),"D"=>array(4,"consonant"),"E"=>array(5,"vowel"),"F"=>array(6,"consonant"),"G"=>array(7,"consonant"),"H"=>array(8,"consonant"),"I"=>array(9,"vowel"),"J"=>array(1,"consonant"),"K"=>array(2,"consonant"),"L"=>array(3,"consonant"),"M"=>array(4,"consonant"),"N"=>array(5,"consonant"),"O"=>array(6,"vowel"),"P"=>array(7,"consonant"),"Q"=>array(8,"consonant"),"R"=>array(9,"consonant"),"S"=>array(1,"consonant"),"T"=>array(2,"consonant"),"U"=>array(3,"vowel"),"V"=>array(4,"consonant"),"W"=>array(5,"consonant"),"X"=>array(6,"consonant"),"Y"=>array(7,"consonant"),"Z"=>array(8,"consonant"));
-
-	#Array person character 
-	$array_character = array("1"=>"Pioneering, Leading, Independent, Attaining, Individualistic","2"=>"Cooperation, Adaptability, Considering, Partnering, Mediating","3"=>"Expression, Verbalization, Socialization, Arts, Joy of Living","4"=>"Values of Foundation, Service, Struggle Against Limits, Steady Growth","5"=>"Expansiveness, Visionary, Adventure, Constructive Use of Freedom","6"=>"Responsibility, Protection,Nurturing, Balance, Sympathy","7"=>"Analysis, Understanding, Awareness, Studious, Meditating","8"=>"Practical Endevors, Status Oriented, Power-seeking, High-material goals","9"=>"Humanitarian, Giving, Selflessness, Obligations, Creative Expression");
-
-	# Extract every space on the name
-	# Generate array every words
-	$extract_fullname = explode(" ",$fullname);
-
-	# Count array of words and
-	# Extract words into a letter
-	for($a=0; $a<count($extract_fullname); $a++) {
-		for($x=0; $x<strlen($extract_fullname[$a]); $x++) {
-			
-			# Value of letter
-			$nl[$extract_fullname[$a]][] = $array_letters[$extract_fullname[$a][$x]][0];
-
-			# Vowel / consonant letter
-			$vl[$extract_fullname[$a]][] = $array_letters[$extract_fullname[$a][$x]][1];
-		}
-
-		foreach ($vl[$extract_fullname[$a]] as $vkey => $vvalue) {
-			if($vvalue == "vowel") {
-				$soul_number[] = $array_letters[$extract_fullname[$a][$vkey]][0];
-			} else {
-				$personality_number[] = $array_letters[$extract_fullname[$a][$vkey]][0];
-			}
-		}
-
-	}
-
-	# Spliting number, convert to array and
-	# Sum of array number 
-	function strSplitX($x) {
-
-		$sums = array_sum($x);
-
-		if(strlen($sums) > 1 || strlen($sums) <= 2 || strlen($sums) == 11 || strlen($sums) == 22 ) {
-			$y = str_split($sums);
-			$y = array_sum($y);
-			if(strlen($y) > 1) {
-				$y = str_split($y);
-				$y = array_sum($y);
-			}
-		} else {
-			$y = $sums;
-		}
-
-		return $y;
-	}
-
-	echo "<strong>".$fullname."</strong><br>";
-	echo "Your Soul Number : (".strSplitX($soul_number).") ".$array_character[strSplitX($soul_number)]."<br>";
-	echo "Your Personality Number : (".strSplitX($personality_number).") ".$array_character[strSplitX($personality_number)];
-}
-?>
